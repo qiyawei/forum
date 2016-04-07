@@ -25,5 +25,8 @@
         <module name="forum" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="forum" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
