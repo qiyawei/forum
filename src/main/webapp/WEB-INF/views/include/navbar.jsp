@@ -11,26 +11,29 @@
   <div class="container">
     <a href="/index.do" class="brand">
       <i class="fa fa-reddit-alien"></i>
+      <c:if test="${not emptysessionScope.user}">
+        <span>${sessionScope.user.username}</span>
+      </c:if>
     </a>
     <ul class="unstyled inline pull-right">
       <c:choose>
         <c:when test="${not empty sessionScope.user}">
           <li>
             <a href="#">
-              <img src="http://7xp5t4.com1.z0.glb.clouddn.com/Fqb8f9uDknAt2ilBoY-ipSZRMes-?imageView2/1/w/20/h/20" class="img-circle" alt="">
+              <img src="http://7xq3kx.com1.z0.glb.clouddn.com/${sessionScope.user.img}?imageView2/1/w/20/h/20" class="img-circle img1" alt="">
             </a>
           </li>
           <li>
-            <a href=""><i class="fa fa-plus"></i></a>
+            <a href="/topic/new.do"><i class="fa fa-plus"></i></a>
           </li>
           <li>
-            <a href="#"><i class="fa fa-bell"></i></a>
+            <a  id="bell" href="javascript:;"><i class="fa fa-bell"><span id="informnum"></span></i></a>
           </li>
           <li>
-            <a href="setting.html"><i class="fa fa-cog"></i></a>
+            <a href="/user/setting.do"><i class="fa fa-cog"></i></a>
           </li>
           <li>
-            <a href="#"><i class="fa fa-sign-out"></i></a>
+            <a href="/logout.do"><i class="fa fa-sign-out"></i></a>
           </li>
         </c:when>
         <c:otherwise>
@@ -43,3 +46,24 @@
     </ul>
   </div>
 </div>
+<script src="/static/js/jquery-1.12.2.min.js"></script>
+<script>
+  $(function(){
+    <c:if test="${not empty sessionScope.user}">
+    setInterval(function(){
+      $.get("/user/inform.do",function(json){
+        var length = json.length;
+        if(length){
+          $("#informnum").text(length).css("color","red");
+        }
+
+      })
+    },10000)
+    </c:if>
+  })
+
+  $("#bell").click(function(){
+    $("#informnum").text("");
+    $.post("/user/inform.do");
+  });
+</script>

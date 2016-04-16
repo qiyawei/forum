@@ -17,7 +17,7 @@
       <span class="title"><i class="fa fa-sign-in"></i> 注册账号</span>
     </div>
 
-    <form id="regForm" class="form-horizontal">
+    <form method="post" id="regForm" class="form-horizontal">
       <div class="control-group">
         <label class="control-label">账号</label>
         <div class="controls">
@@ -42,6 +42,16 @@
           <input type="text" name="email">
         </div>
       </div>
+      <div class="control-group">
+        <label class="control-label">验证码</label>
+        <div class="controls">
+          <input type="text" name="patchca"/><br/>
+          <a href="javascript:;" id="patchca">看不清换一张</a> <img src="/patchca.do" id="img" />
+        </div>
+
+      </div>
+
+
 
       <div class="form-actions">
         <button type="button" id="regBtn" class="btn btn-primary">注册</button>
@@ -57,6 +67,9 @@
 <script src="/static/js/jquery.validate.js"></script>
 <script>
   $(function(){
+    $("#patchca").click(function(){
+      $("#img").attr("src","/patchca.do?t="+new Date().getTime())
+    });
 
     $("#regBtn").click(function(){
 
@@ -77,13 +90,17 @@
         },
         repassword:{
           required:true,
-          rangelength:[6,18],
+          rangelength:[3,18],
           equalTo:'#password'
         },
         email:{
           required:true,
           email:true,
           remote:"/validate/email.do"
+        },
+        patchca:{
+          required:true,
+          remote:"/validatePatchca.do"
         }
       },
       messages:{
@@ -105,6 +122,10 @@
           required:"请输入电子邮件",
           email:"电子邮件格式错误",
           remote:"该电子邮件已被注册"
+        },
+        patchca:{
+          required:"请输入验证码",
+          remote:"验证码错误"
         }
       },
 

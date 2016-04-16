@@ -19,12 +19,17 @@ public class ValidateEmailServlet extends BasicServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
         User user = new UserDao().findByEmail(email);
-        System.out.println(email + "   "+user);
+        String from = req.getParameter("from");
         String result;
         if(user == null){
             result = "true";
         }else{
-            result = "false";
+            if(from != null&&BasicServlet.getSesssionUser(req).getEmail().equals(email)){
+                result = "true";
+            }else{
+                result = "false";
+            }
+
         }
         BasicServlet.validateClient(resp,result);
     }

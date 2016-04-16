@@ -19,11 +19,11 @@ public class EncodingFilter extends AbstractFilter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest arg0, ServletResponse arg1,
-			FilterChain arg2) throws IOException, ServletException {
-		arg0.setCharacterEncoding(encode);
-		arg1.setCharacterEncoding("UTF-8");
-		arg2.doFilter(arg0, arg1);
+	public void doFilter(ServletRequest request, ServletResponse response,
+			FilterChain filterChain) throws IOException, ServletException {
+		request.setCharacterEncoding(encode);
+		response.setCharacterEncoding(encode);
+		filterChain.doFilter(request, response);
 		
 	}
 

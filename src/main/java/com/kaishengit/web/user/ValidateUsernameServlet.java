@@ -20,11 +20,22 @@ public class ValidateUsernameServlet extends BasicServlet {
         String username = req.getParameter("username");
         username = new String(username.getBytes("ISO8859-1"),"UTF-8");
         User user = new UserDao().findByUsername(username);
+        String from = req.getParameter("from");
         String result;
         if(user == null){
-            result = "true";
+            if(from != null){
+                result = "false";
+            }else{
+                result = "true";
+            }
+
         }else{
-            result = "false";
+            if(from != null){
+                result = "true";
+            }else{
+                result = "false";
+            }
+
         }
         BasicServlet.validateClient(resp,result);
     }

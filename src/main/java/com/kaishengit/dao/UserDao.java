@@ -23,4 +23,14 @@ public class UserDao {
         String sql = "insert into t_user(username,password,email,creattime,img,state) values(?,?,?,?,?,?)";
         DpHelper.update(sql,user.getUsername(),user.getPassword(),user.getEmail(),user.getCreattime(),user.getImg(),user.getState());
     }
+
+    public void update(User user) {
+        String sql = "update t_user set password=?,email=?,lastlogintime=?,lastloginip=?,img=?,state=? where id=?";
+        DpHelper.update(sql,user.getPassword(),user.getEmail(),user.getLastlogintime(),user.getLastloginip(),user.getImg(),user.getState(),user.getId());
+    }
+
+    public User findById(Integer uid) {
+        String sql = "select * from t_user where id=?";
+        return DpHelper.query(sql,new BeanHandler<User>(User.class),uid);
+    }
 }
